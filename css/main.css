@@ -1,0 +1,116 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0; 
+    background-color: #f0f0f0; 
+}
+
+.game-console {
+    display: flex;
+    width: 1200px;
+    height: 600px;
+    background-color: #ccc; 
+    border: 3px solid #333; 
+    border-radius: 20px; 
+}
+  
+.left-controls, .right-controls {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 게임 화면 영역 시작 */
+  
+.screen {
+    margin: 10px;
+    flex: 3;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    border-radius: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+.score {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 2rem;
+}
+
+.playground > ul {
+    border: 1px solid #333;
+    margin: 5px 5px;
+}
+
+.playground > ul > li {
+    width: 100%;
+    height: 20px;
+}
+
+.playground > ul > li > ul {
+    display: flex;
+}
+
+.playground > ul > li > ul > li {
+    width: 20px;
+    height: 20px;
+    outline: 1px solid #ccc;
+}
+.tree {
+    background: #67c23a ;
+}
+
+
+/* 게임 화면 영역 끝 */
+
+/* 게임기 좌측 영역 방향키 영역 시작*/
+.direction-keys {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.middle-keys {
+    display: flex;
+}
+
+.direction-button {
+    width: 50px;
+    height: 50px;
+    background-color: #444;
+    margin: 2px;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+}
+
+.up, .down {
+    margin: 10px 0; 
+}
+
+.left, .right {
+    margin: 0 10px; 
+}
+/* 게임기 좌측 영역 방향키 영역 끝*/
+
+
+/* 게임기 우측 영역 단축키 영역 시작*/  
+.button-a, .button-b {
+    width: 80px;
+    height: 80px;
+    background-color: #444;
+    border-radius: 50%;
+    margin: 10px;
+    text-align: center;
+    line-height: 80px;
+    color: white;
+}
+
+/* 게임기 우측 영역 단축키 영역 끝*/  
+  
