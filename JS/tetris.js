@@ -1,6 +1,9 @@
 import BLOCKS from "./blocks.js";
 //DOM
 const playground = document.querySelector(".playground > ul");
+const gameText = document.querySelector(".game-text");
+const scoreDisplay = document.querySelector(".score");
+const restartBtn = document.querySelector(".game-text > button");
 
 //Setting
 const GAME_ROWS = 20;
@@ -59,8 +62,12 @@ function renderBlocks(moveType = "") {
             target.classList.add(type, "moving");
         } else {
             tempMovingItem = { ...movingItem }
+            if(moveType === 'retry'){
+                clearInterval(downInterval)
+                GameOver()
+            }
             setTimeout(()=>{
-                renderBlocks();
+                renderBlocks('retry');
                 if(moveType === "top"){
                     seizeBlock();
                 }
@@ -80,10 +87,29 @@ function seizeBlock() {
         moving.classList.remove("moving");
         moving.classList.add("seized");
     })
+    checkMatch()
+}
+function checkMatch() {
+    const childNodes = playground.childNodes;
+    childNodes.forEach(child => {
+        let matched = true;
+        child.children[0].childNodes.forEach(li => {
+            if(!li.classList.contains("seized")){
+                matched = false;
+            }
+        })
+        if(matched){
+            child.remove();
+            prependNewLine()
+            score++;
+            scoreDisplay.innerText = score;
+        }
+    })
+
     generateNewBlock()
 }
 
-function generateNewBlock (){
+function generateNewBlock() {
     clearInterval(downInterval);
     downInterval = setInterval(()=>{
         moveBlock('top', 1)
@@ -126,6 +152,10 @@ function dropBlock(){
     }, 10)
 }
 
+function GameOver(){
+    gameText.style.display = "flex"
+}
+
 //handling
 document.addEventListener("keydown", e=> {
     switch(e.keyCode){
@@ -147,4 +177,10 @@ document.addEventListener("keydown", e=> {
         default:
             break;
     }
+})
+
+restartBtn.addEventListener("click", ()=>{
+    playground.innerHTML = "";
+    gameText.style.display = "none"
+    init()
 })
