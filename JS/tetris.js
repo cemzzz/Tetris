@@ -4,6 +4,8 @@ const playground = document.querySelector(".playground > ul");
 const gameText = document.querySelector(".game-text");
 const scoreDisplay = document.querySelector(".score");
 const restartBtn = document.querySelector(".game-text > button");
+const startBtn = document.querySelector(".button-a");
+const pauseBtn = document.querySelector(".button-b");
 
 //Setting
 const GAME_ROWS = 20;
@@ -14,6 +16,8 @@ let score = 0;
 let duration = 500;
 let downInterval;
 let tempMovingItem;
+let isPaused;
+let isGameStarted = false; //게임 시작 여부 확인
 
 const movingItem = {
     type: "",
@@ -22,7 +26,7 @@ const movingItem = {
     left: 3,
 };
 
-init()
+// init()
 
 //functions
 function init(){
@@ -30,7 +34,8 @@ function init(){
     for(let i = 0; i < GAME_ROWS; i++){
         prependNewLine()
     }
-    generateNewBlock()
+    generateNewBlock();
+    isGameStarted = true;
 }
 
 
@@ -122,7 +127,8 @@ function generateNewBlock() {
     movingItem.left = 3;
     movingItem.direction = 0;
     tempMovingItem = {...movingItem };
-    renderBlocks()
+    renderBlocks();
+
 }
 
 function checkEmpty(target){
@@ -152,6 +158,22 @@ function dropBlock(){
     }, 10)
 }
 
+// 일시정지 및 재개 기능
+function togglePause() {
+    if (!isPaused) {
+        clearInterval(downInterval); 
+        isPaused = true;
+        pauseBtn.textContent = "재개"; 
+    } else {
+        downInterval = setInterval(() => {
+            moveBlock('top', 1);
+        }, duration);
+        isPaused = false;
+        pauseBtn.textContent = "일시정지";
+    }
+}
+
+
 function GameOver(){
     gameText.style.display = "flex"
 }
@@ -179,8 +201,17 @@ document.addEventListener("keydown", e=> {
     }
 })
 
+startBtn.addEventListener("click", function() {
+    if (!isGameStarted) {
+        init();
+    };
+});
+
+pauseBtn.addEventListener("click", togglePause);
+
 restartBtn.addEventListener("click", ()=>{
     playground.innerHTML = "";
     gameText.style.display = "none"
+    isGameStarted = false;
     init()
 })
