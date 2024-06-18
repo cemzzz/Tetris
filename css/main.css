@@ -62,8 +62,30 @@ ul {
     height: 20px;
     outline: 1px solid #ccc;
 }
+
+/* 블럭 */
 .tree {
     background: #67c23a ;
+}
+
+.bar {
+    background: #295dbd ;
+}
+
+.square {
+    background: #d88f3b ;
+}
+
+.zee {
+    background: #d34aa5 ;
+}
+
+.elLeft {
+    background: #33b172 ;
+}
+
+.elRight {
+    background: #2fd6c8 ;
 }
 
 

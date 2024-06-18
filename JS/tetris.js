@@ -1,3 +1,4 @@
+import BLOCKS from "./blocks.js";
 //DOM
 const playground = document.querySelector(".playground > ul");
 
@@ -11,21 +12,11 @@ let duration = 500;
 let downInterval;
 let tempMovingItem;
 
-const BLOCKS = {
-    // 방향전환에 따른 모양 4개
-    tree: [
-        [[2, 1],[0, 1],[1, 0],[1, 1]],
-        [[1, 2],[0, 1],[1, 0],[1, 1]],
-        [[1, 2],[0, 1],[2, 1],[1, 1]],
-        [[2, 1],[1, 2],[1, 0],[1, 1]],
-    ]
-}
-
 const movingItem = {
-    type: "tree",
+    type: "",
     direction: 3,
     top: 0,
-    left: 0,
+    left: 3,
 };
 
 init()
@@ -36,7 +27,7 @@ function init(){
     for(let i = 0; i < GAME_ROWS; i++){
         prependNewLine()
     }
-    renderBlocks()
+    generateNewBlock()
 }
 
 
@@ -73,7 +64,7 @@ function renderBlocks(moveType = "") {
                 if(moveType === "top"){
                     seizeBlock();
                 }
-            },0)
+            }, 0)
             return true;
         }
     })
@@ -84,11 +75,32 @@ function renderBlocks(moveType = "") {
 
 
 function seizeBlock() {
+    const movingBlocks = document.querySelectorAll(".moving");
+    movingBlocks.forEach(moving => {
+        moving.classList.remove("moving");
+        moving.classList.add("seized");
+    })
+    generateNewBlock()
+}
 
+function generateNewBlock (){
+    clearInterval(downInterval);
+    downInterval = setInterval(()=>{
+        moveBlock('top', 1)
+    }, duration)
+
+    const blockArray = Object.entries(BLOCKS);
+    const randomIndex = Math.floor(Math.random() * blockArray.length)
+    movingItem.type =  blockArray[randomIndex][0]
+    movingItem.top = 0;
+    movingItem.left = 3;
+    movingItem.direction = 0;
+    tempMovingItem = {...movingItem };
+    renderBlocks()
 }
 
 function checkEmpty(target){
-    if(!target){
+    if(!target || target.classList.contains("seized")){
         return false;
     }
     return true;
@@ -96,7 +108,7 @@ function checkEmpty(target){
 
 function moveBlock(moveType, amount){
     tempMovingItem[moveType] += amount;
-    renderBlocks()
+    renderBlocks(moveType)
 }
 
 function changeDirection(){
@@ -105,6 +117,13 @@ function changeDirection(){
         ? tempMovingItem.direction = 0
         : tempMovingItem.direction += 1;
     renderBlocks()
+}
+
+function dropBlock(){
+    clearInterval(downInterval);
+    downInterval = setInterval(()=>{
+        moveBlock("top", 1)
+    }, 10)
 }
 
 //handling
@@ -121,6 +140,9 @@ document.addEventListener("keydown", e=> {
             break;
         case 38:
             changeDirection();
+            break;
+        case 32:
+            dropBlock();
             break;
         default:
             break;
