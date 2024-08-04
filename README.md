@@ -3,7 +3,7 @@
 
 # 🛠
 ![js](https://img.shields.io/badge/javascript-02569B?style=for-the-badge&logo=javascript&logoColor=white)
-![html](https://img.shields.io/badge/html-#E34F26?style=for-the-badge&logo=html&logoColor=white)
+![html](https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html&logoColor=white)
 ![css](https://img.shields.io/badge/css-02569B?style=for-the-badge&logo=css&logoColor=white)
 
 
